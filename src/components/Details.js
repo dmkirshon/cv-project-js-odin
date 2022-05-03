@@ -5,7 +5,7 @@ class Details extends Component {
     super(props);
 
     this.state = {
-      name: "",
+      name: this.props.details.name,
       phone: "",
       email: "",
       website: "",
@@ -18,9 +18,7 @@ class Details extends Component {
   }
 
   handleNameChange(event) {
-    this.setState({
-      name: event.target.value,
-    });
+    this.props.details.name = event.target.value;
   }
   handlePhoneChange(event) {
     this.setState({

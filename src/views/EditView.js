@@ -9,7 +9,7 @@ class EditView extends Component {
   render() {
     return (
       <div>
-        <Details Edit={true} />
+        <Details Edit={true} details={this.props.details} />
       </div>
     );
   }
