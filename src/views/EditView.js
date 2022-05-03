@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import EditView from "./views/EditView";
+import Details from "../components/Details";
 
-class App extends Component {
+class EditView extends Component {
   constructor(props) {
     super(props);
   }
@@ -9,10 +9,10 @@ class App extends Component {
   render() {
     return (
       <div>
-        <EditView />
+        <Details Edit={true} />
       </div>
     );
   }
 }
 
-export default App;
+export default EditView;
