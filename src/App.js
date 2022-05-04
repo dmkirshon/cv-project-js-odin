@@ -16,6 +16,7 @@ class App extends Component {
     };
 
     this.handleDetailsChanges = this.handleDetailsChanges.bind(this);
+    this.handleViewChange = this.handleViewChange.bind(this);
   }
 
   handleDetailsChanges(event) {
@@ -26,11 +27,28 @@ class App extends Component {
     event.target.reportValidity();
   }
 
+  handleViewChange(event) {
+    this.setState((prevState) => ({
+      edit: !prevState.edit,
+    }));
+  }
+
   render() {
     return (
       <div>
-        <button className="edit view-button">Edit</button>
-        <button className="preview view-button">Preview</button>
+        {!this.state.edit && (
+          <button className="edit view-button" onClick={this.handleViewChange}>
+            Change to Edit
+          </button>
+        )}
+        {this.state.edit && (
+          <button
+            className="preview view-button"
+            onClick={this.handleViewChange}
+          >
+            Change to Preview
+          </button>
+        )}
         <Details
           editView={this.state.edit}
           details={this.state.details}
