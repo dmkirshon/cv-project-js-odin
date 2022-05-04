@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import EditView from "./views/EditView";
-import PreviewView from "./views/PreviewView";
+import Details from "./components/Details";
 
 class App extends Component {
   constructor(props) {
@@ -16,40 +15,27 @@ class App extends Component {
       },
     };
 
-    this.handleEditView = this.handleEditView.bind(this);
-    this.handlePreviewView = this.handlePreviewView.bind(this);
+    this.handleDetailsChanges = this.handleDetailsChanges.bind(this);
   }
 
-  handleNameChange() {}
-
-  handleEditView() {
-    this.setState({
-      edit: true,
-    });
-  }
-
-  handlePreviewView() {
-    this.setState({
-      edit: false,
-    });
+  handleDetailsChanges(event) {
+    const { name, value } = event.target;
+    this.setState((prevState) => ({
+      details: { ...prevState.details, [name]: value },
+    }));
+    event.target.reportValidity();
   }
 
   render() {
     return (
       <div>
-        <button className="edit view-button" onClick={this.handleEditView}>
-          Edit
-        </button>
-        <button
-          className="preview view-button"
-          onClick={this.handlePreviewView}
-        >
-          Preview
-        </button>
-        {this.state.edit && (
-          <EditView editView={this.state.edit} details={this.state.details} />
-        )}
-        {!this.state.edit && <PreviewView previewView={!this.state.edit} />}
+        <button className="edit view-button">Edit</button>
+        <button className="preview view-button">Preview</button>
+        <Details
+          editView={this.state.edit}
+          details={this.state.details}
+          handleDetailsChanges={this.handleDetailsChanges}
+        />
       </div>
     );
   }
