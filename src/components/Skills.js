@@ -25,7 +25,21 @@ class Skills extends Component {
     );
   }
 
-  render() {
+  previewViewSkills() {
+    const { skillList } = this.props.skills;
+    return (
+      <section>
+        <p>Skills:</p>
+        <ul>
+          {skillList.map((skill, index) => {
+            return <li key={index}>{skill}</li>;
+          })}
+        </ul>
+      </section>
+    );
+  }
+
+  editViewSkills() {
     const { skills, handleSkillChanges, handleSkillAdd } = this.props;
     return (
       <section>
@@ -44,6 +58,16 @@ class Skills extends Component {
         </form>
         <div>{this.overviewEditSkills()}</div>
       </section>
+    );
+  }
+
+  render() {
+    const { editView } = this.props;
+    return (
+      <div>
+        {editView && this.editViewSkills()}
+        {!editView && this.previewViewSkills()}
+      </div>
     );
   }
 }

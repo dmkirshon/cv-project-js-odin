@@ -93,6 +93,7 @@ class App extends Component {
           handleDetailsChanges={this.handleDetailsChanges}
         />
         <Skills
+          editView={this.state.edit}
           skills={this.state.skills}
           handleSkillChanges={this.handleSkillChanges}
           handleSkillAdd={this.handleSkillAdd}
