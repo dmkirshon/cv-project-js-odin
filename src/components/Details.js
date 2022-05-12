@@ -1,15 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 
-class Details extends Component {
-  constructor(props) {
-    super(props);
-
-    this.editViewDetails = this.editViewDetails.bind(this);
-    this.previewViewDetails = this.previewViewDetails.bind(this);
-  }
-
-  previewViewDetails() {
-    const { details } = this.props;
+const Details = ({ editView, details, handleDetailsChanges }) => {
+  function previewViewDetails() {
     return (
       <section>
         <p className="preview-details-name">{details.name}</p>
@@ -20,8 +12,7 @@ class Details extends Component {
     );
   }
 
-  editViewDetails() {
-    const { details, handleDetailsChanges } = this.props;
+  function editViewDetails() {
     return (
       <form>
         <label>
@@ -64,16 +55,12 @@ class Details extends Component {
     );
   }
 
-  render() {
-    const { editView } = this.props;
-
-    return (
-      <div>
-        {editView && this.editViewDetails()}
-        {!editView && this.previewViewDetails()}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      {editView && editViewDetails()}
+      {!editView && previewViewDetails()}
+    </div>
+  );
+};
 
 export default Details;

@@ -1,27 +1,20 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
-class Education extends Component {
-  constructor(props) {
-    super(props);
+const Education = ({
+  editView,
+  education: { educationList, newEducation },
+  handleEducationChanges,
+  handleEducationAdd,
+  handleEducationClose,
+  handleEducationDelete,
+}) => {
+  const [showForm, setShowForm] = useState(false);
 
-    this.state = {
-      showForm: false,
-    };
-
-    this.triggerShowForm = this.triggerShowForm.bind(this);
-
-    this.editViewEducation = this.editViewEducation.bind(this);
-    this.previewViewEducation = this.previewViewEducation.bind(this);
+  function triggerShowForm() {
+    setShowForm((prevShowForm) => !prevShowForm);
   }
 
-  triggerShowForm() {
-    this.setState({
-      showForm: !this.state.showForm,
-    });
-  }
-
-  overviewEditEducation() {
-    const { educationList } = this.props.education;
+  function overviewEditEducation() {
     return (
       <ul>
         {educationList.map((education, index) => {
@@ -33,9 +26,7 @@ class Education extends Component {
               <p className="edit-education-start">{education.start}</p>
               <p className="edit-education-end">{education.end}</p>
               <p className="edit-education-gpa">{education.gpa}</p>
-              <button onClick={(e) => this.props.handleEducationDelete(index)}>
-                ❌
-              </button>
+              <button onClick={(e) => handleEducationDelete(index)}>❌</button>
             </li>
           );
         })}
@@ -43,8 +34,7 @@ class Education extends Component {
     );
   }
 
-  previewViewEducation() {
-    const { educationList } = this.props.education;
+  function previewViewEducation() {
     return (
       <section>
         <p>Education:</p>
@@ -67,20 +57,17 @@ class Education extends Component {
       </section>
     );
   }
-  editViewEducation() {
-    const { school, location, major, start, end, gpa } =
-      this.props.education.newEducation;
+  function editViewEducation() {
+    const { school, location, major, start, end, gpa } = newEducation;
 
     return (
       <section>
-        {!this.state.showForm && (
-          <button onClick={this.triggerShowForm}>Add Education</button>
-        )}
-        {this.state.showForm && (
+        {!showForm && <button onClick={triggerShowForm}>Add Education</button>}
+        {showForm && (
           <form
             onSubmit={(e) => {
-              this.props.handleEducationAdd(e);
-              this.triggerShowForm();
+              handleEducationAdd(e);
+              triggerShowForm();
             }}
           >
             <label>
@@ -89,7 +76,7 @@ class Education extends Component {
                 type="text"
                 name="school"
                 value={school}
-                onChange={this.props.handleEducationChanges}
+                onChange={handleEducationChanges}
               ></input>
             </label>
             <label>
@@ -98,7 +85,7 @@ class Education extends Component {
                 type="text"
                 name="location"
                 value={location}
-                onChange={this.props.handleEducationChanges}
+                onChange={handleEducationChanges}
               ></input>
             </label>
             <label>
@@ -107,7 +94,7 @@ class Education extends Component {
                 type="text"
                 name="major"
                 value={major}
-                onChange={this.props.handleEducationChanges}
+                onChange={handleEducationChanges}
               ></input>
             </label>
             <label>
@@ -116,7 +103,7 @@ class Education extends Component {
                 type="text"
                 name="start"
                 value={start}
-                onChange={this.props.handleEducationChanges}
+                onChange={handleEducationChanges}
               ></input>
             </label>
             <label>
@@ -125,7 +112,7 @@ class Education extends Component {
                 type="text"
                 name="end"
                 value={end}
-                onChange={this.props.handleEducationChanges}
+                onChange={handleEducationChanges}
               ></input>
             </label>
             <label>
@@ -134,14 +121,14 @@ class Education extends Component {
                 type="text"
                 name="gpa"
                 value={gpa}
-                onChange={this.props.handleEducationChanges}
+                onChange={handleEducationChanges}
               ></input>
             </label>
             <button
               name="close"
               onClick={(e) => {
-                this.props.handleEducationClose(e);
-                this.triggerShowForm();
+                handleEducationClose(e);
+                triggerShowForm();
               }}
             >
               Close
@@ -151,20 +138,17 @@ class Education extends Component {
             </button>
           </form>
         )}
-        <div>{this.overviewEditEducation()}</div>
+        <div>{overviewEditEducation()}</div>
       </section>
     );
   }
 
-  render() {
-    const { editView } = this.props;
-    return (
-      <div>
-        {editView && this.editViewEducation()}
-        {!editView && this.previewViewEducation()}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      {editView && editViewEducation()}
+      {!editView && previewViewEducation()}
+    </div>
+  );
+};
 
 export default Education;

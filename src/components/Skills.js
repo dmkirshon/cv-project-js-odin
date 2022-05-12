@@ -1,23 +1,20 @@
-import React, { Component } from "react";
+import React from "react";
 
-class Skills extends Component {
-  constructor(props) {
-    super(props);
-
-    this.overviewEditSkills = this.overviewEditSkills.bind(this);
-  }
-
-  overviewEditSkills() {
-    const { skillList } = this.props.skills;
+const Skills = ({
+  editView,
+  skills: { skillList, newSkill },
+  handleSkillAdd,
+  handleSkillChanges,
+  handleSkillDelete,
+}) => {
+  function overviewEditSkills() {
     return (
       <ul>
         {skillList.map((skill, index) => {
           return (
             <li key={index}>
               {skill}
-              <button onClick={(e) => this.props.handleSkillDelete(index)}>
-                ❌
-              </button>
+              <button onClick={(e) => handleSkillDelete(index)}>❌</button>
             </li>
           );
         })}
@@ -25,8 +22,7 @@ class Skills extends Component {
     );
   }
 
-  previewViewSkills() {
-    const { skillList } = this.props.skills;
+  function previewViewSkills() {
     return (
       <section>
         <p>Skills:</p>
@@ -39,8 +35,7 @@ class Skills extends Component {
     );
   }
 
-  editViewSkills() {
-    const { skills, handleSkillChanges, handleSkillAdd } = this.props;
+  function editViewSkills() {
     return (
       <section>
         <form name="addSkill">
@@ -48,7 +43,7 @@ class Skills extends Component {
             New Skill:
             <input
               type="text"
-              value={skills.newSkill}
+              value={newSkill}
               onChange={handleSkillChanges}
             ></input>
           </label>
@@ -56,20 +51,17 @@ class Skills extends Component {
             Add
           </button>
         </form>
-        <div>{this.overviewEditSkills()}</div>
+        <div>{overviewEditSkills()}</div>
       </section>
     );
   }
 
-  render() {
-    const { editView } = this.props;
-    return (
-      <div>
-        {editView && this.editViewSkills()}
-        {!editView && this.previewViewSkills()}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      {editView && editViewSkills()}
+      {!editView && previewViewSkills()}
+    </div>
+  );
+};
 
 export default Skills;
